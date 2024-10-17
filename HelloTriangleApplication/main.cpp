@@ -5,7 +5,13 @@
 #include <iostream>
 #include <cstdlib>
 
+constexpr uint32_t WIDTH = 800;
+constexpr uint32_t HEIGHT = 600;
+
 class HelloTriangleApplication {
+private:
+	GLFWwindow* window;
+
 public:
 	void run() {
 		initWindow();
@@ -16,7 +22,12 @@ public:
 
 private:
 	void initWindow() {
+		glfwInit();
 
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+		window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
 	}
 
 	void initVulkan() {
@@ -24,11 +35,15 @@ private:
 	}
 
 	void mainLoop() {
-
+		while (!glfwWindowShouldClose(window)) {
+			glfwPollEvents();
+		}
 	}
 
 	void cleanup() {
+		glfwDestroyWindow(window);
 
+		glfwTerminate();
 	}
 };
 
